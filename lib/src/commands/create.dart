@@ -28,7 +28,7 @@ class CreateCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final generateProgress = _logger.progress('Bootstrapping');
+    final generateProgress = _logger.progress('Creating project $_pluginName');
 
     final brick = Brick.git(
       const GitPath(
@@ -39,8 +39,23 @@ class CreateCommand extends Command<int> {
     final target = DirectoryGeneratorTarget(Directory(path.current));
     final files = await generator.generate(target,
         vars: {'project': _pluginName}, logger: _logger);
-
     generateProgress.complete('Generated ${files.length} file(s)');
+
+    _logger.info(
+        'Running "flutter pug get" in ${_pluginName}_platform_interface...');
+    Process.runSync('flutter', ['pub', 'get'],
+        workingDirectory:
+            '${path.current}/$_pluginName/${_pluginName}_platform_interface');
+
+    _logger.info('Running "flutter pug get" in $_pluginName...');
+    Process.runSync('flutter', ['pub', 'get'],
+        workingDirectory: '${path.current}/$_pluginName/$_pluginName');
+
+    _logger.info('Running "flutter pug get" in example...');
+    Process.runSync('flutter', ['pub', 'get'],
+        workingDirectory: '${path.current}/$_pluginName/$_pluginName/example');
+
+    _logger.info('All done!');
 
     return ExitCode.success.code;
   }

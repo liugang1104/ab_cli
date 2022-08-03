@@ -12,6 +12,7 @@ dependencies:
   mason_logger: ^0.1.1
   path: ^1.8.0
   universal_io: ^2.0.4
+  flutter_tools: any
 
 
 dev_dependencies:
