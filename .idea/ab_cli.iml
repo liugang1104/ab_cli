@@ -12,6 +12,21 @@
       <excludeFolder url="file://$MODULE_DIR$/sk_dd/sk_dd_platform_interface/build" />
       <excludeFolder url="file://$MODULE_DIR$/sk_dd/sk_dd_platform_interface/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/sk_dd/sk_dd_platform_interface/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo_android/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo_android/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo_android/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo_ios/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo_ios/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo_ios/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo_platform_interface/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo_platform_interface/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo_platform_interface/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo/.pub" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -14,7 +14,7 @@ class CreateCommand extends Command<int> {
     Logger? logger,
   }) : _logger = logger ?? Logger() {
     argParser
-      ..addOption('plugin-name', help: 'The plugin name for this new plugi.');
+      ..addOption('plugin-name', help: 'The plugin name for this new plugin.');
   }
 
   @override
@@ -23,6 +23,9 @@ class CreateCommand extends Command<int> {
 
   @override
   String get name => 'create';
+
+  @override
+  String get invocation => 'ab_cli create <output directory>';
 
   ArgResults get _argResults => argResults!;
 
@@ -41,22 +44,20 @@ class CreateCommand extends Command<int> {
         vars: {'project': _pluginName}, logger: _logger);
     generateProgress.complete('Generated ${files.length} file(s)');
 
-    _logger.info(
-        'Running "flutter pug get" in ${_pluginName}_platform_interface...');
-    Process.runSync('flutter', ['pub', 'get'],
-        workingDirectory:
-            '${path.current}/$_pluginName/${_pluginName}_platform_interface');
+    getDependency(String dir) {
+      _logger.info('Running "flutter pug get" in ${path.basename(dir)}...');
+      Process.runSync('flutter', ['pub', 'get'], workingDirectory: dir);
+    }
 
-    _logger.info('Running "flutter pug get" in $_pluginName...');
-    Process.runSync('flutter', ['pub', 'get'],
-        workingDirectory: '${path.current}/$_pluginName/$_pluginName');
-
-    _logger.info('Running "flutter pug get" in example...');
-    Process.runSync('flutter', ['pub', 'get'],
-        workingDirectory: '${path.current}/$_pluginName/$_pluginName/example');
+    // 执行pub get
+    List<FileSystemEntity> dirList =
+        Directory('${path.current}/$_pluginName').listSync(recursive: false);
+    for (var element in dirList) {
+      getDependency(element.path);
+    }
+    getDependency('${path.current}/$_pluginName/$_pluginName/example');
 
     _logger.info('All done!');
-
     return ExitCode.success.code;
   }
 

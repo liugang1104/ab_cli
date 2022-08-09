@@ -28,7 +28,7 @@ class ABCommandRunner extends CommandRunner<int> {
   Future<int?> runCommand(ArgResults topLevelResults) async {
     int? exitCode = ExitCode.unavailable.code;
     if (topLevelResults['version'] == true) {
-      _logger.info(packageVersion);
+      _logger.info('0.0.1');
       exitCode = ExitCode.success.code;
     } else {
       exitCode = await super.runCommand(topLevelResults);
