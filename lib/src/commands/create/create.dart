@@ -1,11 +1,21 @@
 import 'dart:io';
 
+import 'package:ab_cli/src/commands/create/templates/module_template.dart';
+import 'package:ab_cli/src/commands/create/templates/plugin_template.dart';
+import 'package:ab_cli/src/commands/create/templates/template.dart';
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart';
 import 'package:path/path.dart' as path;
 
 final RegExp _identifierRegExp = RegExp('[a-z_][a-z0-9_]*');
+
+final _templates = [
+  PluginTemplate(),
+  ModuleTemplate(),
+];
+
+final _defaultTemplate = ModuleTemplate();
 
 class CreateCommand extends Command<int> {
   final Logger _logger;
@@ -14,7 +24,22 @@ class CreateCommand extends Command<int> {
     Logger? logger,
   }) : _logger = logger ?? Logger() {
     argParser
-      ..addOption('plugin-name', help: 'The plugin name for this new plugin.');
+      ..addOption('project-name',
+          help: 'The project name for this new project. ')
+      ..addOption(
+        'template',
+        abbr: 't',
+        help: 'The template used to generate this new project.',
+        defaultsTo: _defaultTemplate.name,
+        allowed: _templates.map((e) => e.name),
+        allowedHelp: _templates.fold<Map<String, String>>(
+          {},
+          (previousValue, element) => {
+            ...previousValue,
+            element.name: element.desc,
+          },
+        ),
+      );
   }
 
   @override
@@ -31,38 +56,32 @@ class CreateCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final generateProgress = _logger.progress('Creating project $_pluginName');
+    final outputDirectory = _outputDirectory;
+    final projectName = _projectName;
+    final template = _template;
+    final generateProgress = _logger.progress('Creating project $projectName');
 
     final brick = Brick.git(
-      const GitPath(
-        'https://github.com/liugang1104/plugin_template.git',
-      ),
+      GitPath('https://github.com/liugang1104/code_bricks.git',
+          path: template.gitPath),
     );
     final generator = await MasonGenerator.fromBrick(brick);
-    final target = DirectoryGeneratorTarget(Directory(path.current));
+    final target = DirectoryGeneratorTarget(outputDirectory);
     final files = await generator.generate(target,
-        vars: {'project': _pluginName}, logger: _logger);
+        vars: {'project': projectName}, logger: _logger);
     generateProgress.complete('Generated ${files.length} file(s)');
-
-    getDependency(String dir) {
-      _logger.info('Running "flutter pug get" in ${path.basename(dir)}...');
-      Process.runSync('flutter', ['pub', 'get'], workingDirectory: dir);
-    }
-
-    // 执行pub get
-    List<FileSystemEntity> dirList =
-        Directory('${path.current}/$_pluginName').listSync(recursive: false);
-    for (var element in dirList) {
-      getDependency(element.path);
-    }
-    getDependency('${path.current}/$_pluginName/$_pluginName/example');
-
-    _logger.info('All done!');
+    await template.onGenerateComplete(_logger, outputDirectory);
     return ExitCode.success.code;
   }
 
-  String get _pluginName {
-    final pluginName = _argResults['plugin-name'] as String? ??
+  Template get _template {
+    final templateName = _argResults['template'] as String?;
+    return _templates.firstWhere((element) => element.name == templateName,
+        orElse: () => _defaultTemplate);
+  }
+
+  String get _projectName {
+    final pluginName = _argResults['project-name'] as String? ??
         path.basename(path.normalize(_outputDirectory.absolute.path));
     _validateProjectName(pluginName);
     return pluginName;

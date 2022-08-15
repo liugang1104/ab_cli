@@ -1,4 +1,4 @@
-import 'package:ab_cli/src/commands/create.dart';
+import 'package:ab_cli/src/commands/create/create.dart';
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart';

@@ -27,6 +27,18 @@
       <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo/build" />
       <excludeFolder url="file://$MODULE_DIR$/sk_ooo/sk_ooo/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/abc_device/abc_device/build" />
+      <excludeFolder url="file://$MODULE_DIR$/abc_device/abc_device/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/abc_device/abc_device/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/abc_device/abc_device_ios/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/abc_device/abc_device_ios/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/abc_device/abc_device_ios/build" />
+      <excludeFolder url="file://$MODULE_DIR$/abc_device/abc_device_platform_interface/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/abc_device/abc_device_platform_interface/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/abc_device/abc_device_platform_interface/build" />
+      <excludeFolder url="file://$MODULE_DIR$/abc_device/abc_device/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/abc_device/abc_device/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/abc_device/abc_device/example/.pub" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
